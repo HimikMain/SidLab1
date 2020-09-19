@@ -2,89 +2,53 @@ public class List {
     private Node head;
     private Node tail;
 
+    private int size = 0;
+
     public List(){
         head = null;
-        tail = null;
     }
 
     private boolean isEmpty(){
         return head == null;
     }
 
-    public void addLast(int data) {
-        Node temp = new Node(data);
-
-        if (isEmpty())
-            head = temp;
-        else
-            tail.next = temp;
-
-        temp.prev = tail;
-        tail = temp;
-    }
-
-    public void add(int data, int index){
-        Node cur = head;
-        int c = 0;
-
-        while (cur != null && c != index){
-            cur = cur.next;
-            c++;
-        }
-
-        Node temp = new Node(data);
-
-        cur.prev.next = temp;
-        temp.prev = cur.prev;
-        cur.prev = temp;
-        temp.next = cur;
-    }
-
-    public void removeFirst(){
-        if(head.next == null)
-            tail = null;
-        else
-            head.next.prev = null;
-
-        head = head.next;
-    }
-
-    public void removeLast(){
-        if(head.next == null)
-            head = null;
-        else
-            tail.prev.next = null;
-
-        tail = tail.prev;
-    }
-
-    public void remove(int key){
+    public void add(int data1, int data2){
         Node cur = head;
 
-        while (cur.data != key){
-            cur = cur.next;
+        boolean check = true;
 
-            if (cur == null)
-                return;
+        if (head != null) {
+            check = false;
+
+            while (cur.coef != data1) {
+                cur = cur.next;
+
+                if (cur == null) {
+                    check = true;
+                    break;
+                }
+            }
         }
 
-        if (cur == head)
-            removeFirst();
-        else
-            cur.prev.next = cur.next;
+        if (data2 != 0) {
+            if (check) {
+                Node temp = new Node();
 
-        if (cur == tail)
-            removeLast();
-        else
-            cur.next.prev = cur.prev;
-    }
+                temp.coef = data1;
+                temp.index = data2;
 
-    public void print(){
-        Node temp = head;
-
-        while (temp != null){
-            System.out.println(temp.data);
-            temp = temp.next;
+                if (isEmpty()) {
+                    head = temp;
+                    tail = temp;
+                } else {
+                    tail.next = temp;
+                    tail = temp;
+                }
+            } else {
+                cur.index += data2;
+            }
         }
+
+        size++;
     }
 }
